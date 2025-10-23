@@ -1,0 +1,20 @@
+.{
+    .name = .zig_box2d,
+    .version = "3.1.1",
+    .minimum_zig_version = "0.15.0",
+
+    .fingerprint = 0x8213259cf6b7a578,
+
+    .dependencies = .{
+        .box2d_upstream = .{
+            .url = "https://github.com/erincatto/box2d/archive/refs/tags/v3.1.1.tar.gz",
+            .hash = "N-V-__8AAD_GLQC0gE2D_PytnnbJ5Ow_tY-H253NllhDk_n1",
+        },
+    },
+
+    .paths = .{
+        "LICENSE",
+        "build.zig",
+        "build.zig.zon",
+    },
+}
