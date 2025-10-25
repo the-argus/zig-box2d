@@ -1,5 +1,6 @@
 const std = @import("std");
 const builtin = @import("builtin");
+const zemscripten = @import("zemscripten");
 
 const release_flags = &[_][]const u8{"-DNDEBUG"};
 const debug_flags = &[_][]const u8{};
@@ -119,10 +120,16 @@ pub fn build(b: *std.Build) !void {
     }
 
     switch (target.result.os.tag) {
-        .wasi, .emscripten => {
+        .emscripten => {
             if (!disable_simd) {
-                try flags.appendSlice(b.allocator, &.{ "-msimd128", "-msse2" });
+                try flags.appendSlice(b.allocator, &.{
+                    "-msimd128",
+                    // box2d includes this, but it doesnt seem to be real, at least for wasm-emscripten?
+                    // "-msse2"
+                });
             }
+
+            lib.step.dependOn(zemscripten.activateEmsdkStep(b));
         },
         else => {
             if (use_avx) {
