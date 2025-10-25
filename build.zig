@@ -77,6 +77,8 @@ pub fn build(b: *std.Build) !void {
 
     var flags = std.ArrayList([]const u8){};
 
+    const emsdk_builder = b.option(*std.Build, "emsdk_builder", "A builder who has the emsdk as a dependency.") orelse b;
+
     if (b.option(bool, "validate", "Enable heavy validation") == true) {
         try flags.append(b.allocator, "-DBOX2D_VALIDATE");
     }
@@ -129,7 +131,7 @@ pub fn build(b: *std.Build) !void {
                 });
             }
 
-            lib.step.dependOn(zemscripten.activateEmsdkStep(b));
+            lib.step.dependOn(zemscripten.activateEmsdkStep(emsdk_builder));
         },
         else => {
             if (use_avx) {
