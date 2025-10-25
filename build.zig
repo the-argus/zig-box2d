@@ -141,8 +141,7 @@ pub fn build(b: *std.Build) !void {
 
     // always install headers
     for (headers) |h| {
-        const install_header = b.addInstallHeaderFile(src_root.path(b, "include").path(b, h), h);
-        b.getInstallStep().dependOn(&install_header.step);
+        lib.installHeader(src_root.path(b, "include").path(b, h), h);
     }
 
     b.installArtifact(lib);
